@@ -9,7 +9,7 @@ export ENHANCD_ENABLE_DOUBLE_DOT="${ENHANCD_ENABLE_DOUBLE_DOT:-true}"
 export ENHANCD_ENABLE_SINGLE_DOT=${ENHANCD_ENABLE_SINGLE_DOT:-true}
 export ENHANCD_ENABLE_HYPHEN="${ENHANCD_ENABLE_HYPHEN:-true}"
 export ENHANCD_ENABLE_HOME="${ENHANCD_ENABLE_HOME:-true}"
-export ENHANCD_ARG_DOUBLE_DOT="${ENHANCD_ARG_DOUBLE_DOT:-..}"
+export ENHANCD_ARG_DOUBLE_DOT=false
 export ENHANCD_ARG_SINGLE_DOT="${ENHANCD_ARG_SINGLE_DOT:-.}"
 export ENHANCD_ARG_HYPHEN="${ENHANCD_ARG_HYPHEN:--}"
 export ENHANCD_ARG_HOME="${ENHANCD_ARG_HOME:-}"
@@ -52,8 +52,8 @@ if [[ ! -f ${ENHANCD_DIR}/enhancd.log ]]; then
   touch "${ENHANCD_DIR}/enhancd.log"
 fi
 
-# alias to cd
-eval "alias ${ENHANCD_COMMAND:=cd}=__enhancd::cd"
+# use function so that Kiro CLI autocomplete works with it
+eval "${ENHANCD_COMMAND:=cd}() { __enhancd::cd \"\$@\"; }"
 
 # Set the filter if empty
 if [[ -z ${ENHANCD_FILTER} ]]; then
